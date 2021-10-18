@@ -7,6 +7,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'LongAndRandomSecretKey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskProject.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['RECAPTCHA_PUBLIC_KEY'] = "6Ldhw9ocAAAAAA_bOcU6G_Yq0tB1Fta1lHHCicWt"
+app.config['RECAPTCHA_PRIVATE_KEY'] = "6Ldhw9ocAAAAAHh43wHrBIfp_tRAfk_07kD66Wjs"
 
 db = SQLAlchemy(app)
 
