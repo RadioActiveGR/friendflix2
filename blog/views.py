@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from sqlalchemy import desc
+import copy
 from app import db
 from blog.forms import PostForm
 from models import Post, User
@@ -13,11 +14,18 @@ postkey = user.postkey
 def blog():
     posts = Post.query.order_by(desc('id')).all()
 
-    for p in posts:
+    # creates a list of copied post objects which are independent of database.
+    post_copies = list(map(lambda x: copy.deepcopy(x), posts))
+
+    # empty list for decrypted copied post objects
+    decrypted_posts = []
+
+    # decrypt each copied post object and add it to decrypted_posts array.
+    for p in post_copies:
         p.view_post(postkey)
+        decrypted_posts.append(p)
 
-    return render_template('blog.html', posts=posts)
-
+    return render_template('blog.html', posts=decrypted_posts)
 
 @blog_blueprint.route('/create', methods=('GET', 'POST'))
 def create():
@@ -41,22 +49,20 @@ def update(id):
     form = PostForm()
 
     if form.validate_on_submit():
-        Post.query.filter_by(id=id).update({"title": form.title.data})
-        Post.query.filter_by(id=id).update({"body": form.body.data})
-
-        db.session.commit()
-
         post.update_post(form.title.data, form.body.data, postkey)
-
         return blog()
 
-    post.view_post(postkey)
+    # creates a copy of post object which is independent of database.
+    post_copy = copy.deepcopy(post)
 
-    form.title.data = post.title
-    form.body.data = post.body
+    # decrypt copy of post object.
+    post_copy.view_post(postkey)
+
+    # set update form with title and body of copied post object
+    form.title.data = post_copy.title
+    form.body.data = post_copy.body
 
     return render_template('update.html', form=form)
-
 @blog_blueprint.route('/<int:id>/delete')
 def delete(id):
     Post.query.filter_by(id=id).delete()
