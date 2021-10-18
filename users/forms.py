@@ -1,5 +1,5 @@
 import re
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import Required, DataRequired, Email, Length, EqualTo, ValidationError
 
@@ -17,6 +17,7 @@ class RegisterForm(FlaskForm):
                                                                 message='Password must be between 8 and 15 characters in length'), character_check])
     confirm_password = PasswordField(validators=[DataRequired(), EqualTo('password',
                                                                          message='Both password fields must be equal')])
+    pinkey = StringField(validators=[Required(), character_check, Length(max=32, min=32, message="Length of pin must be 32.")])
     submit = SubmitField()
 
     def validate_password(self, password):
@@ -28,6 +29,8 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField(validators=[Required(), Email()])
     password = PasswordField(validators=[Required()])
+    pinkey = StringField(validators=[Required()])
+    recaptcha = RecaptchaField()
     submit = SubmitField()
 
 
