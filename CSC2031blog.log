@@ -1,0 +1,4 @@
+10/21/2021 01:03:57 PM : SECURITY - Log out [2, mike9@email.com, 127.0.0.1]
+10/21/2021 01:04:12 PM : SECURITY - User registration [mike1@email.com, 127.0.0.1]
+10/21/2021 01:04:52 PM : SECURITY - Log in [4, mike1@email.com, 127.0.0.1]
+10/21/2021 01:05:21 PM : SECURITY - Log out [4, mike1@email.com, 127.0.0.1]
