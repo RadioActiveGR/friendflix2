@@ -1,12 +1,13 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session, request
 from app import db
 from werkzeug.security import check_password_hash
 from blog.views import blog
-from flask_login import LoginManager, login_user, logout_user
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from models import User
 from users.forms import RegisterForm, LoginForm
 from datetime import datetime
 import pyotp
+import logging
 
 
 users_blueprint = Blueprint('users', __name__, template_folder='templates')
@@ -24,6 +25,8 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
+
+        logging.warning('SECURITY - User registration [%s, %s]', form.username.data, request.remote_addr)
 
 
         return redirect(url_for('users.login'))
@@ -69,12 +72,20 @@ def login():
             user.current_logged_in = datetime.now()
             db.session.add(user)
             db.session.commit()
+
+            logging.warning('SECURITY - Log in [%s, %s, %s]', current_user.id, current_user.username,
+                            request.remote_addr)
+
+            return blog()
+
         else:
             flash('You have to give valid 2fa!', 'danger')
-        return blog()
+
     return render_template('login.html', form=form)
 
 @users_blueprint.route('/logout')
+@login_required
 def logout():
+    logging.warning('SECURITY - Log out [%s, %s, %s]', current_user.id, current_user.username, request.remote_addr)
     logout_user()
     return redirect(url_for('index'))
