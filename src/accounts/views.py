@@ -2,9 +2,9 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 
 from src import bcrypt, db
-from src.accounts.models import User
+from src.accounts.models import User, Event
 
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, RegisterEventForm
 
 accounts_bp = Blueprint("accounts", __name__)
 
@@ -51,3 +51,18 @@ def logout():
     logout_user()
     flash("You were logged out.", "success")
     return redirect(url_for("accounts.login"))
+
+@accounts_bp.route("/registerEvent", methods=["GET", "POST"])
+def registerEvent():
+    
+    form = RegisterEventForm(request.form)
+    if form.validate_on_submit():
+        event = Event(title=form.title.data, body=form.body.data, creator_id=current_user.id, location="test") #TODO: change location
+        db.session.add(event)
+        db.session.commit()
+
+        flash("Event Created!", "success")
+
+        return redirect(url_for("core.home"))
+
+    return render_template("accounts/registerEvent.html", form=form)

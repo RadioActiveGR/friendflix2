@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField
+from wtforms import EmailField, PasswordField, StringField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from src.accounts.models import User
@@ -37,3 +37,7 @@ class RegisterForm(FlaskForm):
             self.password.errors.append("Passwords must match")
             return False
         return True
+
+class RegisterEventForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired()])
+    body = TextAreaField("Description", validators=[DataRequired()])
