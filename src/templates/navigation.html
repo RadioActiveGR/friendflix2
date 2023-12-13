@@ -19,4 +19,26 @@
       </div>
     </div>
   </div>
+
+
+{% if current_user.is_authenticated %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='indexx.css') }}">
+<div class="navigation">
+  <a href="{{ url_for('accounts.registerEvent') }}"><button class="menuToggle" ></button></a>
+  <div class="menu">
+  <ul>
+  <li style="--i:0.1s;"><a href="{{ url_for('core.home') }}"><ion-icon name="home-outline"></ion-icon></a></li>
+  <li style="--i:0.2s;"><a href="{{ url_for('accounts.registerEvent') }}"><ion-icon name="calendar-clear-outline"></ion-icon></a></li>
+  <li></li>
+  
+  <li style="--i:0.1s;"><a href="{{ url_for('accounts.registerEvent') }}"><ion-icon name="chatbubble-outline"></ion-icon></a></li>
+  <li style="--i:0.2s;"><a href="{{ url_for('accounts.registerEvent') }}"><ion-icon name="person-outline"></ion-icon></a></li>
+  </ul>
+  </div>
+</div>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+{% endif %}
+
 </header>

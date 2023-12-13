@@ -1,10 +1,14 @@
 {% extends "_base.html" %}
 {% block content %}
+
 <html lang="en">
 
 <body>
 <div class="main-container">
     <h1 class="text-center">Welcome {{current_user.email}}!</h1>
+
+    
+        
 
     <div class="events-container">
         <!-- Display events created by the user -->
@@ -25,9 +29,15 @@
         
     </div>
 
+        
     <!-- Button to create events -->
-    <a href="{{ url_for('accounts.registerEvent') }}"><button class="btn btn-primary create-event-btn">Create Event</button></a>
-  
+    <!-- <a href="{{ url_for('accounts.registerEvent') }}"><button class="btn btn-primary create-event-btn rounded-circle d-flex align-items-center justify-content-center" style="font-size: 30px; width: 40px; height: 40px;">+</button></a> -->
+
+            
+    <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='index.css') }}"> -->
+                    
+
+
 
     <div class="loader-wrapper">
         <span class="loader"><span class="loader-inner"></span></span>
@@ -38,7 +48,9 @@
         $(".loader-wrapper").fadeOut("slow");
     }, 2000);
     </script>
+    
 </div>
+
 
 
 
@@ -46,6 +58,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 </body>
 </html>
@@ -94,6 +108,7 @@
         display:flex;
         justify-content: center;
         align-items: center;
+        z-index: 20;
     }
     .loader {
         display: inline-block;

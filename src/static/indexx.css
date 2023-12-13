@@ -1,0 +1,103 @@
+*
+/* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+:root
+{
+--clr: #20415c;
+}
+body
+{
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+background: var(--clr);
+} */
+
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+
+.navigation {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .menuToggle {
+    position: relative;
+    width: 65px;
+    height: 65px;
+    background: #ff4886;
+    border: 5px solid var(--clr);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transform: translateY(-30px);
+  }
+  
+  .menuToggle::before {
+    content: '+';
+    position: absolute;
+    font-size: 3em;
+    color: #ffffff;
+    transition: 1.5s;
+  }
+  
+  .menu {
+    position: absolute;
+    width: 360px;
+    height: 70px;
+    background: #141414;
+    border-radius: 70px;
+  }
+  
+  .menu ul {
+    position: absolute;
+    display: flex;
+    gap: 41px;
+    line-height: 70px;
+  }
+  
+  .menu ul li {
+    list-style: none;
+    cursor: pointer;
+  }
+  
+  .menu ul li a {
+    display: block;
+    font-size: 2em;
+    text-decoration: none;
+    color: #555;
+  }
+  
+  .menu ul li:hover a {
+    color: #ff4886;
+    text-decoration: none;
+  }
+  
+  .menuToggle i {
+    position: absolute;
+    inset: 0;
+  }
+  
+  

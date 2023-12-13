@@ -53,6 +53,7 @@ def logout():
     return redirect(url_for("accounts.login"))
 
 @accounts_bp.route("/registerEvent", methods=["GET", "POST"])
+@login_required
 def registerEvent():
     
     form = RegisterEventForm(request.form)
